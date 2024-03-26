@@ -73,11 +73,11 @@ var app = builder.Build();
 #endregion
 
 #region Configure Pepiline
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseAuthConfiguration();
 
@@ -99,7 +99,7 @@ void MapActions(WebApplication app)
     RegisterUser registerUser) =>
     {
         if (registerUser == null)
-            return Results.BadRequest("Usuário não informado");
+            return Results.BadRequest("UsuÃ¡rio nÃ£o informado");
 
         if (!MiniValidator.TryValidate(registerUser, out var errors))
             return Results.ValidationProblem(errors);
@@ -140,7 +140,7 @@ void MapActions(WebApplication app)
         LoginUser loginUser) =>
     {
         if (loginUser == null)
-            return Results.BadRequest("Usuário não informado");
+            return Results.BadRequest("UsuÃ¡rio nÃ£o informado");
 
         if (!MiniValidator.TryValidate(loginUser, out var errors))
             return Results.ValidationProblem(errors);
@@ -148,10 +148,10 @@ void MapActions(WebApplication app)
         var result = await signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
 
         if (result.IsLockedOut)
-            return Results.BadRequest("Usuário bloqueado!");
+            return Results.BadRequest("UsuÃ¡rio bloqueado!");
 
         if (!result.Succeeded)
-            return Results.BadRequest("Usuário ou senha invalidos");
+            return Results.BadRequest("UsuÃ¡rio ou senha invalidos");
 
         var jwt = new JwtBuilder()
                     .WithUserManager(userManager)
